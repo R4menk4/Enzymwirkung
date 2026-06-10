@@ -1,29 +1,50 @@
-# Experiment: Einfluss der Temperatur auf die Enzymaktivität
+# Einfache Enzymreaktion
 
-Diese browserbasierte Unterrichtssimulation zeigt modellhaft, wie die Temperatur die Aktivität einer Enzymreaktion beeinflusst. Sie ist für einen Biologie-Grundkurs der EF/11. Klasse gedacht und funktioniert ohne Backend.
+Interaktive Web-Simulation für den Biologieunterricht in der EF / Klasse 11.
+Die App zeigt vereinfacht, wie ein Substrat an das aktive Zentrum eines Enzyms
+bindet, wie ein Enzym-Substrat-Komplex entsteht und wie anschließend Produkte
+freigesetzt werden. Eine zusätzliche Seite erklärt das Schlüssel-Schloss-Prinzip.
 
-## Didaktisches Modell
+## Dateien
 
-Die dargestellten Werte und Formen sind didaktisch vereinfacht. Enzyme, Substrate, Produkte und denaturierte Enzyme werden als Modellobjekte gezeigt. Die Messwerte sind fest vorgegeben und werden nicht zufällig erzeugt. Enzyme und Substrate bewegen sich frei im Reaktionsraum; bei höheren Temperaturen ist die Teilchenbewegung schneller.
+- `index.html`: Hauptseite mit der Enzymreaktion
+- `schluessel-schloss.html`: Zusatzseite zum Schlüssel-Schloss-Prinzip
+- `style.css`: Gestaltung, responsives Layout und Animationen
+- `script.js`: Schrittsteuerung, Automatiklauf und Infokarten der Hauptseite
+- `lock-key.js`: Interaktion auf der Zusatzseite
+- `README.md`: kurze Projektbeschreibung
 
-## Nutzung
+## Lokal nutzen
 
-1. `index.html` im Browser öffnen.
-2. Eine Temperatur zwischen 0 °C und 50 °C in 10er-Schritten einstellen.
-3. Mit **Start** einen Durchlauf beginnen.
-4. Mit **Pause** den Durchlauf anhalten und mit **Fortsetzen** weiterlaufen lassen.
-5. Mit **Stopp** den aktuellen Durchlauf zurücksetzen.
-6. Nach jedem abgeschlossenen Durchlauf erscheint der passende Messpunkt im Diagramm.
-7. Mit **Messpunkte löschen** kann das Diagramm zurückgesetzt werden.
+Die App braucht keinen Build-Schritt.
 
-## GitHub Pages
+1. Lade alle Dateien in einen Ordner.
+2. Öffne `index.html` im Browser.
+3. Nutze den Button "Schlüssel-Schloss-Prinzip", um zur Zusatzseite zu wechseln.
 
-Die App besteht nur aus HTML, CSS und JavaScript. Für GitHub Pages kann der Projektordner direkt in ein Repository hochgeladen und GitHub Pages für den Hauptbranch aktiviert werden.
+Alternativ kann der Ordner mit einem einfachen lokalen Webserver geöffnet
+werden, zum Beispiel mit einer Editor-Erweiterung wie "Live Server".
 
-## Modellparameter
+## Veröffentlichung mit GitHub Pages
 
-Alle festen Simulationswerte stehen zentral in:
+1. Erstelle ein GitHub-Repository.
+2. Lade alle HTML-, CSS- und JavaScript-Dateien sowie `README.md` in das Repository.
+3. Öffne in GitHub die Einstellungen des Repositorys.
+4. Wähle unter "Pages" den Branch `main` und den Ordner `/root` aus.
+5. Speichere die Einstellung. Nach kurzer Zeit stellt GitHub die Seite über
+   eine Pages-Adresse bereit.
 
-`js/simulationParams.js`
+## Anpassen
 
-Dort können Enzymanzahl, Substratanzahl, Temperaturstufen, Durchlaufzeiten, Denaturierungsverhalten und relative Geschwindigkeiten angepasst werden.
+Texte zu den einzelnen Schritten können in `script.js` im Array `steps`
+angepasst werden. Die Rückmeldungen zum Schlüssel-Schloss-Prinzip liegen in
+`lock-key.js`. Farben, Größen und Abstände liegen in `style.css`. Die sichtbaren
+Formen der Simulation befinden sich als SVG in den HTML-Dateien.
+
+## Didaktischer Hinweis
+
+Die Simulation ist ein vereinfachtes Modell. Enzyme sind in Wirklichkeit
+dreidimensionale Moleküle und können ihre Form leicht verändern. Das Modell
+konzentriert sich bewusst auf Bindung, Enzym-Substrat-Komplex, Produktbildung,
+Wiederverwendbarkeit des Enzyms und die passende Bindungsstelle beim
+Schlüssel-Schloss-Prinzip.
