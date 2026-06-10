@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schlüssel-Schloss-Prinzip</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage-panel" aria-labelledby="page-title">
+        <div class="top-bar">
+          <div>
+            <p class="eyebrow">Biologie EF / Klasse 11</p>
+            <h1 id="page-title">Schlüssel-Schloss-Prinzip</h1>
+          </div>
+          <div class="page-actions">
+            <a class="link-button" href="index.html">Zur Enzymreaktion</a>
+            <div class="step-badge">Form entscheidet über Bindung</div>
+          </div>
+        </div>
+
+        <div class="lock-grid">
+          <section class="simulation-card lock-card" aria-label="Schlüssel-Schloss-Prinzip als Modell">
+            <svg
+              class="lock-svg"
+              viewBox="0 0 920 560"
+              role="img"
+              aria-labelledby="lockTitle lockDesc"
+            >
+              <title id="lockTitle">Enzym mit rundem aktivem Zentrum und drei Substraten</title>
+              <desc id="lockDesc">
+                Drei unterschiedlich geformte Substrate werden mit einem
+                runden aktiven Zentrum verglichen. Nur eines passt in die
+                Bindungstasche.
+              </desc>
+
+              <defs>
+                <filter id="lockShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#145069" flood-opacity="0.16" />
+                </filter>
+                <linearGradient id="enzymeGradient" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#64d9d4" />
+                  <stop offset="100%" stop-color="#2099c3" />
+                </linearGradient>
+                <linearGradient id="substrateGradient" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#ffb257" />
+                  <stop offset="100%" stop-color="#f47b45" />
+                </linearGradient>
+              </defs>
+
+              <rect class="work-area" x="24" y="28" width="872" height="504" rx="28" />
+
+              <g class="lock-enzyme">
+                <path
+                  class="enzyme-body"
+                  d="M166 168
+                     C223 76 377 65 473 120
+                     C542 159 573 214 568 278
+                     C563 342 599 362 651 338
+                     C708 312 768 346 779 407
+                     C791 475 705 512 620 489
+                     C555 472 511 435 451 462
+                     C353 506 230 484 169 404
+                     C116 334 119 244 166 168Z"
+                  filter="url(#lockShadow)"
+                />
+                <circle class="round-active-center" cx="561" cy="279" r="58" />
+                <text class="label lock-enzyme-label" x="248" y="157">Enzym</text>
+                <text class="label lock-center-label" x="483" y="205">rundes aktives Zentrum</text>
+              </g>
+
+              <g class="lock-substrate round-substrate" data-substrate="round" tabindex="0" role="button" aria-label="Rundes Substrat testen">
+                <circle class="candidate round" cx="0" cy="0" r="48" />
+                <text class="label candidate-label" x="-76" y="82">Substrat A</text>
+                <text class="fit-label" x="-44" y="10">passt</text>
+              </g>
+
+              <g class="lock-substrate triangle-substrate" data-substrate="triangle" tabindex="0" role="button" aria-label="Substrat B testen">
+                <path
+                  class="candidate triangle"
+                  d="M-68 -12
+                     C-58 -43 -25 -56 4 -43
+                     C18 -37 27 -27 35 -13
+                     C58 -10 72 7 68 27
+                     C63 54 25 62 3 43
+                     C-15 58 -49 51 -61 27
+                     C-69 12 -74 3 -68 -12Z"
+                />
+                <text class="label candidate-label" x="-76" y="86">Substrat B</text>
+              </g>
+
+              <g class="lock-substrate square-substrate" data-substrate="square" tabindex="0" role="button" aria-label="Substrat C testen">
+                <path
+                  class="candidate square"
+                  d="M-55 -10
+                     C-50 -42 -19 -57 7 -43
+                     C18 -37 26 -25 31 -10
+                     C54 -4 66 18 55 39
+                     C42 64 2 59 -14 39
+                     C-31 50 -58 40 -63 16
+                     C-65 6 -62 -4 -55 -10Z"
+                />
+                <text class="label candidate-label" x="-76" y="86">Substrat C</text>
+              </g>
+
+              <path class="fit-path" d="M707 148 C652 169 606 207 574 260" />
+              <text class="path-label lock-path-label" x="610" y="134">Nur die passende Bindungsstelle kann binden.</text>
+            </svg>
+          </section>
+
+          <aside class="info-panel lock-info" aria-live="polite">
+            <div>
+              <p class="eyebrow">Aufgabe</p>
+              <h2>Welches Substrat passt?</h2>
+              <p>
+                Klicke auf ein Substrat. Das passende Substrat bewegt sich in
+                das aktive Zentrum. Die anderen Substrate können dort nicht
+                stabil binden.
+              </p>
+            </div>
+
+            <div class="controls substrate-controls" aria-label="Substrate testen">
+              <button type="button" class="primary" data-choice="round">Substrat A testen</button>
+              <button type="button" data-choice="triangle">Substrat B testen</button>
+              <button type="button" data-choice="square">Substrat C testen</button>
+              <button type="button" id="lockResetBtn">Zurücksetzen</button>
+            </div>
+
+            <div class="feedback-box" id="feedbackBox">
+              <h3>Schlüssel-Schloss-Prinzip</h3>
+              <p>
+                Enzyme wirken spezifisch: Das Substrat muss in seiner Form zum
+                aktiven Zentrum passen.
+              </p>
+            </div>
+
+            <div class="legend" aria-label="Legende">
+              <h3>Legende</h3>
+              <div><span class="swatch enzyme"></span>Enzym</div>
+              <div><span class="swatch active"></span>aktives Zentrum</div>
+              <div><span class="swatch substrate"></span>passendes Substrat</div>
+              <div><span class="swatch wrong"></span>nicht passende Substrate</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="learning-panel">
+        <div class="model-note">
+          <h2>Merksatz</h2>
+          <p>
+            Beim Schlüssel-Schloss-Prinzip bindet ein Enzym nur bestimmte
+            Substrate, weil deren Form zum aktiven Zentrum passt.
+          </p>
+        </div>
+
+        <div class="question-box">
+          <h2>Kurze Sicherung</h2>
+          <p>Warum bindet Substrat A, aber Substrat B und C nicht?</p>
+          <details>
+            <summary>Musterlösung anzeigen</summary>
+            <p>
+              Substrat A ist rund und passt in das runde aktive Zentrum.
+              Substrat B und C haben anders angeordnete Bindungsbereiche und
+              können deshalb nicht stabil am aktiven Zentrum binden.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <script src="lock-key.js"></script>
+  </body>
+</html>
