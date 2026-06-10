@@ -1,184 +1,129 @@
 <!doctype html>
 <html lang="de">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Einfache Enzymreaktion</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Einfluss der Temperatur auf die Enzymaktivität</title>
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="stage-panel" aria-labelledby="page-title">
-        <div class="top-bar">
-          <div>
-            <p class="eyebrow">Biologie EF / Klasse 11</p>
-            <h1 id="page-title">Einfache Enzymreaktion</h1>
-          </div>
-          <div class="page-actions">
-            <a class="link-button" href="schluessel-schloss.html">Schlüssel-Schloss-Prinzip</a>
-            <div class="step-badge" id="stepBadge" aria-live="polite">
-              Schritt 1: Ausgangslage
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Biologie EF / 11. Klasse</p>
+          <h1>Experiment: Einfluss der Temperatur auf die Enzymaktivität</h1>
+        </div>
+        <p class="model-note">Modellhafte Simulation: Die dargestellten Werte und Formen sind didaktisch vereinfacht.</p>
+      </header>
+
+      <section class="dashboard-grid" aria-label="Unterrichtssimulation">
+        <article class="module simulation-card">
+          <div class="module-header">
+            <div>
+              <h2>Simulation</h2>
+              <p id="runStatus">Bereit für einen Durchlauf.</p>
+            </div>
+            <div class="controls" aria-label="Simulationssteuerung">
+              <button id="startButton" type="button">Start</button>
+              <button id="pauseButton" type="button" disabled>Pause</button>
+              <button id="stopButton" type="button" disabled>Stopp</button>
             </div>
           </div>
-        </div>
 
-        <div class="simulation-grid">
-          <section class="simulation-card" aria-label="Interaktive Simulation">
-            <div class="scene" id="scene" data-step="0">
-              <svg
-                class="reaction-svg"
-                viewBox="0 0 900 520"
-                role="img"
-                aria-labelledby="svgTitle svgDesc"
-              >
-                <title id="svgTitle">Modell einer einfachen Enzymreaktion</title>
-                <desc id="svgDesc">
-                  Ein Substrat bindet am aktiven Zentrum eines Enzyms, wird in
-                  zwei Produkte umgewandelt und anschließend freigesetzt.
-                </desc>
+          <canvas id="simulationCanvas" width="900" height="520" aria-label="Animierte Enzymreaktion"></canvas>
 
-                <defs>
-                  <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="14" stdDeviation="13" flood-color="#145069" flood-opacity="0.16" />
-                  </filter>
-                  <linearGradient id="enzymeGradient" x1="0" x2="1" y1="0" y2="1">
-                    <stop offset="0%" stop-color="#5ed7d4" />
-                    <stop offset="100%" stop-color="#229cc4" />
-                  </linearGradient>
-                  <linearGradient id="substrateGradient" x1="0" x2="1">
-                    <stop offset="0%" stop-color="#ffb257" />
-                    <stop offset="100%" stop-color="#f47b45" />
-                  </linearGradient>
-                  <linearGradient id="productGradient" x1="0" x2="1">
-                    <stop offset="0%" stop-color="#ffd96d" />
-                    <stop offset="100%" stop-color="#ff9e48" />
-                  </linearGradient>
-                </defs>
+          <div class="stats" aria-live="polite">
+            <div>
+              <span>Temperatur</span>
+              <strong id="statTemperature">30 °C</strong>
+            </div>
+            <div>
+              <span>Umgesetzt</span>
+              <strong id="statConverted">0 / 10</strong>
+            </div>
+            <div>
+              <span>Aktive Enzyme</span>
+              <strong id="statActive">4</strong>
+            </div>
+            <div>
+              <span>Denaturiert</span>
+              <strong id="statDenatured">0</strong>
+            </div>
+            <div>
+              <span>Zeit</span>
+              <strong id="statTime">0,0 s</strong>
+            </div>
+            <div>
+              <span>v nach Abschluss</span>
+              <strong id="statVelocity">-</strong>
+            </div>
+          </div>
+        </article>
 
-                <rect class="work-area" x="24" y="28" width="852" height="464" rx="28" />
+        <article class="module chart-card">
+          <div class="module-header">
+            <div>
+              <h2>Diagramm</h2>
+              <p>Messpunkte abgeschlossener Durchläufe</p>
+            </div>
+            <button id="clearPointsButton" type="button" class="secondary">Messpunkte löschen</button>
+          </div>
+          <canvas id="chartCanvas" width="720" height="430" aria-label="Diagramm der Enzymaktivität"></canvas>
+        </article>
 
-                <g class="enzyme-group info-target" data-info="enzyme" tabindex="0" role="button" aria-label="Info: Enzym">
-                  <path
-                    class="enzyme-body"
-                    d="M194 132
-                       C242 82 329 66 398 103
-                       C440 126 474 160 491 201
-                       C508 238 538 243 573 222
-                       C610 199 653 211 673 246
-                       C697 289 681 352 632 387
-                       C575 428 494 424 439 390
-                       C405 369 367 367 330 388
-                       C275 419 206 403 168 354
-                       C125 298 136 181 194 132Z"
-                    filter="url(#softShadow)"
-                  />
-                  <path
-                    class="active-center"
-                    d="M491 216
-                       C518 216 538 235 538 260
-                       C538 287 516 306 489 306
-                       C464 306 443 286 443 259
-                       C443 236 463 216 491 216Z
-                       M459 259
-                       C459 248 468 239 479 239
-                       C490 239 499 248 499 259
-                       C499 270 490 279 479 279
-                       C468 279 459 270 459 259Z"
-                  />
-                  <text class="label label-enzyme" x="270" y="151">Enzym</text>
-                  <text class="label label-active" x="476" y="190">aktives Zentrum</text>
-                </g>
+        <article class="module legend-card">
+          <h2>Legende</h2>
+          <div class="legend-grid">
+            <div class="legend-item">
+              <span class="legend-enzyme"><span></span></span>
+              <strong>Enzym</strong>
+            </div>
+            <div class="legend-item">
+              <span class="legend-substrate"></span>
+              <strong>Substrat</strong>
+            </div>
+            <div class="legend-item">
+              <span class="legend-products"><span></span><span></span></span>
+              <strong>Produkt</strong>
+            </div>
+            <div class="legend-item">
+              <span class="legend-denatured"><span></span></span>
+              <strong>denaturiertes Enzym</strong>
+            </div>
+          </div>
+        </article>
 
-                <g class="substrate-group molecule info-target" data-info="substrate" tabindex="0" role="button" aria-label="Info: Substrat">
-                  <path
-                    class="substrate-shape"
-                    d="M0 -50
-                       C28 -50 48 -30 48 -3
-                       C48 28 25 48 -3 48
-                       C-29 48 -50 26 -50 -2
-                       C-50 -30 -29 -50 0 -50Z"
-                  />
-                  <circle class="substrate-notch" cx="-34" cy="0" r="18" />
-                  <text class="label molecule-label" x="-42" y="-66">Substrat</text>
-                </g>
+        <article class="module thermometer-card">
+          <div class="module-header">
+            <div>
+              <h2>Thermometer</h2>
+              <p id="temperatureHint">Temperatur vor dem Start einstellen.</p>
+            </div>
+            <strong id="temperatureValue" class="temperature-value">30 °C</strong>
+          </div>
 
-                <g class="complex-label info-target" data-info="complex" tabindex="0" role="button" aria-label="Info: Enzym-Substrat-Komplex">
-                  <rect x="418" y="330" width="230" height="44" rx="22" />
-                  <text x="435" y="358">Enzym-Substrat-Komplex</text>
-                </g>
-
-                <g class="product product-a info-target" data-info="product" tabindex="0" role="button" aria-label="Info: Produkt A">
-                  <path class="product-shape" d="M0 -31 C24 -30 40 -14 39 7 C38 31 18 44 -7 39 C-31 34 -42 12 -34 -9 C-27 -26 -16 -31 0 -31Z" />
-                  <text class="label product-label" x="-40" y="-48">Produkt</text>
-                </g>
-                <g class="product product-b info-target" data-info="product" tabindex="0" role="button" aria-label="Info: Produkt B">
-                  <path class="product-shape second" d="M0 -29 C22 -25 36 -7 31 14 C26 36 1 45 -20 32 C-39 20 -42 -3 -29 -18 C-20 -29 -11 -32 0 -29Z" />
-                </g>
-
-                <path class="motion-path" d="M720 260 C650 260 570 258 494 257" />
-                <text class="path-label" x="610" y="238">Bindung am aktiven Zentrum</text>
-              </svg>
-
-              <div class="tooltip" id="tooltip" hidden>
-                <strong id="tooltipTitle">Enzym</strong>
-                <span id="tooltipText"></span>
+          <div class="thermometer-panel">
+            <div class="thermometer" aria-hidden="true">
+              <div class="thermometer-scale">
+                <span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><span>0</span>
+              </div>
+              <div class="thermometer-tube">
+                <div id="thermometerFill" class="thermometer-fill"></div>
+              </div>
+              <div class="thermometer-bulb"></div>
+            </div>
+            <div class="slider-wrap">
+              <input id="temperatureSlider" type="range" min="0" max="50" value="30" step="10" aria-label="Temperatur in Grad Celsius">
+              <div class="slider-labels" aria-hidden="true">
+                <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
               </div>
             </div>
-          </section>
-
-          <aside class="info-panel" aria-labelledby="currentStepTitle">
-            <div class="current-step">
-              <p class="eyebrow">Aktueller Schritt</p>
-              <h2 id="currentStepTitle">Schritt 1: Ausgangslage</h2>
-              <p id="stepText">
-                Enzym und Substrat liegen getrennt vor. Das aktive Zentrum ist
-                noch frei.
-              </p>
-            </div>
-
-            <div class="controls" aria-label="Steuerung der Simulation">
-              <button type="button" class="primary" id="startBtn">Start</button>
-              <button type="button" id="pauseBtn">Pause</button>
-              <button type="button" id="prevBtn">Schritt zurück</button>
-              <button type="button" id="nextBtn">Schritt weiter</button>
-              <button type="button" id="resetBtn">Zurücksetzen</button>
-            </div>
-
-            <div class="legend" aria-label="Legende">
-              <h3>Legende</h3>
-              <div><span class="swatch enzyme"></span>Enzym</div>
-              <div><span class="swatch active"></span>aktives Zentrum</div>
-              <div><span class="swatch substrate"></span>Substrat</div>
-              <div><span class="swatch product"></span>Produkt</div>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="learning-panel">
-        <div class="model-note">
-          <h2>Modellhinweis</h2>
-          <p>
-            Vereinfachtes Modell: Enzyme sind in Wirklichkeit dreidimensionale
-            Moleküle und können ihre Form leicht verändern.
-          </p>
-        </div>
-
-        <div class="question-box">
-          <h2>Sicherungsfrage</h2>
-          <p>Warum kann das Enzym nach der Reaktion erneut verwendet werden?</p>
-          <details>
-            <summary>Musterlösung anzeigen</summary>
-            <p>
-              Das Enzym wird bei der Reaktion nicht verbraucht. Es verändert
-              nur kurzzeitig die Bindung des Substrats und liegt danach wieder
-              unverändert vor.
-            </p>
-          </details>
-        </div>
+          </div>
+        </article>
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="js/simulationParams.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
